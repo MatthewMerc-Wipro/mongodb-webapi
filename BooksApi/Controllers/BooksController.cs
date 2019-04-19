@@ -39,17 +39,17 @@ namespace BooksApi.Controllers
         }
 
         [HttpPost]
-        public ActionResult<Book> Create(Book book)
+        public async Task<IActionResult> Create(Book book)
         {
-            _bookService.Create(book);
+            await _bookService.Create(book);
 
             return CreatedAtRoute("GetBook", new { id = book.Id.ToString() }, book);
         }
 
         [HttpPut("{id:length(24)}")]
-        public IActionResult Update(string id, Book bookIn)
+        public async Task<IActionResult> Update(string id, Book bookIn)
         {
-            var book = _bookService.Get(id);
+            var book = await _bookService.Get(id);
 
             if (book == null)
             {

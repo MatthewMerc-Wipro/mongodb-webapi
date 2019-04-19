@@ -30,25 +30,25 @@ namespace BooksApi.Services
           return book;
         }
 
-        public Book Create(Book book)
+        public async Task<Book> Create(Book book)
         {
-            _books.InsertOne(book);
+            await _books.InsertOneAsync(book);
             return book;
         }
 
-        public void Update(string id, Book bookIn)
+        public async void Update(string id, Book bookIn)
         {
-            _books.ReplaceOne(book => book.Id == id, bookIn);
+            await _books.ReplaceOneAsync(book => book.Id == id, bookIn);
         }
 
-        public void Remove(Book bookIn)
+        public async void Remove(Book bookIn)
         {
-            _books.DeleteOne(book => book.Id == bookIn.Id);
+            await _books.DeleteOneAsync(book => book.Id == bookIn.Id);
         }
 
-        public void Remove(string id)
+        public async void Remove(string id)
         {
-            _books.DeleteOne(book => book.Id == id);
+            await _books.DeleteOneAsync(book => book.Id == id);
         }
     }
 }
