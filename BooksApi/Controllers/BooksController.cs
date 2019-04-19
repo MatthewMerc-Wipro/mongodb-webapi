@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using BooksApi.Models;
 using BooksApi.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -17,22 +18,24 @@ namespace BooksApi.Controllers
         }
 
         [HttpGet]
-        public ActionResult<List<Book>> Get()
+        public async Task<ActionResult<IList<Book>>> Get()
         {
-            return _bookService.Get();
+            var books = await _bookService.Get();
+
+            return Ok(books);
         }
 
         [HttpGet("{id:length(24)}", Name = "GetBook")]
-        public ActionResult<Book> Get(string id)
+        public async Task<IActionResult> Get(string id)
         {
-            var book = _bookService.Get(id);
+            var book = await _bookService.Get(id);
 
             if (book == null)
             {
                 return NotFound();
             }
 
-            return book;
+            return Ok(book);
         }
 
         [HttpPost]
@@ -59,9 +62,9 @@ namespace BooksApi.Controllers
         }
 
         [HttpDelete("{id:length(24)}")]
-        public IActionResult Delete(string id)
+        public async Task<IActionResult> Delete(string id)
         {
-            var book = _bookService.Get(id);
+            var book = await _bookService.Get(id);
 
             if (book == null)
             {

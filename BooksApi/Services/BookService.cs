@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using BooksApi.Models;
 using Microsoft.Extensions.Configuration;
 using MongoDB.Driver;
@@ -17,14 +18,16 @@ namespace BooksApi.Services
             _books = database.GetCollection<Book>("Books");
         }
 
-        public List<Book> Get()
+        public async Task<IList<Book>> Get()
         {
-            return _books.Find(book => true).ToList();
+            var books = await _books.Find(book => true).ToListAsync();
+            return  books;
         }
 
-        public Book Get(string id)
+        public async Task<Book> Get(string id)
         {
-            return _books.Find<Book>(book => book.Id == id).FirstOrDefault();
+          var book = await _books.Find(b => b.Id == id).SingleAsync();
+          return book;
         }
 
         public Book Create(Book book)
