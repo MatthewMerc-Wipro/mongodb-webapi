@@ -24,10 +24,9 @@ namespace BooksApi.Services
             return  books;
         }
 
-        public async Task<IAsyncCursor<Book>> Get(string id)
+        public async Task<Book> Get(string id)
         {
-          var book = await _books.FindAsync<Book>(b => b.Id == id);
-
+          var book = await _books.Find(b => b.Id == id).SingleAsync();
           return book;
         }
 

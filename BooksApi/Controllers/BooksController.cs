@@ -61,19 +61,19 @@ namespace BooksApi.Controllers
             return NoContent();
         }
 
-        // [HttpDelete("{id:length(24)}")]
-        // public async Task<IActionResult> Delete(string id)
-        // {
-        //     var book = await _bookService.Get(id);
+        [HttpDelete("{id:length(24)}")]
+        public async Task<IActionResult> Delete(string id)
+        {
+            var book = await _bookService.Get(id);
 
-        //     if (book == null)
-        //     {
-        //         return NotFound();
-        //     }
+            if (book == null)
+            {
+                return NotFound();
+            }
 
-        //     _bookService.Remove(book.Id);
+            _bookService.Remove(book.Id);
 
-        //     return NoContent();
-        // }
+            return NoContent();
+        }
     }
 }
